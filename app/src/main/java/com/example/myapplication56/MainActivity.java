@@ -2,58 +2,45 @@ package com.example.myapplication56;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private ImageView imageView;
+    private ImageButton nextButton, prevButton;
 
-    ImageView imageViewMain, imageViewForward, imageViewBackward;
 
-    int[] imageArray = {
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3,
-            R.drawable.image4,
-            R.drawable.image5
+    private int[] images = {
+            R.drawable.im1,
+            R.drawable.im2,
+            R.drawable.im3,
+            R.drawable.im4,
+            R.drawable.im5,
     };
 
-    int currentIndex = 0;
+    private int currentIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        imageViewMain = findViewById(R.id.imageView7);
-        imageViewForward = findViewById(R.id.imageView5);
-        imageViewBackward = findViewById(R.id.imageView4);
-
-
-        imageViewMain.setImageResource(imageArray[currentIndex]);
+        imageView = findViewById(R.id.imageView);
+        nextButton = findViewById(R.id.nextButton);
+        prevButton = findViewById(R.id.prevButton);
 
 
-        imageViewForward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentIndex++;
-                if (currentIndex >= imageArray.length) {
-                    currentIndex = 0;
-                }
-                imageViewMain.setImageResource(imageArray[currentIndex]);
-            }
+        nextButton.setOnClickListener(v -> {
+            currentIndex = (currentIndex + 1) % images.length;
+            imageView.setImageResource(images[currentIndex]);
         });
 
 
-        imageViewBackward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentIndex--;
-                if (currentIndex < 0) {
-                    currentIndex = imageArray.length - 1;
-                }
-                imageViewMain.setImageResource(imageArray[currentIndex]);
-            }
-        });
-    }
-}
+        prevButton.setOnClickListener(v -> {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            imageView.setImageResource(images[currentIndex]);
+
+  });
+
+}}
